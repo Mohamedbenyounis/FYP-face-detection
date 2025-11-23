@@ -1,0 +1,15 @@
+[
+    {
+        "timestamp": "2025-11-23_14-35-22",
+        "source_image": "test1.jpg",
+        "face_index": 0,
+        "bbox": [
+            66,
+            27,
+            166,
+            167
+        ],
+        "det_score": 0.8497017621994019,
+        "event_type": "face_detected"
+    }
+]
