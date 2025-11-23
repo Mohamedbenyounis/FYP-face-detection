@@ -1,48 +1,78 @@
 import cv2
-import numpy as np
+import json
+import time
+from datetime import datetime
 from insightface.app import FaceAnalysis
+import os
+
+
+LOG_FILE = "event_log.json"
+
+
+def log_event(event_data):
+    """Append face detection event to JSON log."""
+    if os.path.exists(LOG_FILE):
+        with open(LOG_FILE, "r") as f:
+            logs = json.load(f)
+    else:
+        logs = []
+
+    logs.append(event_data)
+
+    with open(LOG_FILE, "w") as f:
+        json.dump(logs, f, indent=4)
+
+    print(f"[LOG] Event saved → {LOG_FILE}")
+
 
 def main():
-    # Load model (SCRFD + ArcFace), CPU only
-    app = FaceAnalysis(name="buffalo_l")
+    print("[INFO] Loading face detection model…")
+
+    app = FaceAnalysis("buffalo_l")
     app.prepare(ctx_id=-1, det_size=(640, 640))
 
-    # Load your input image
-    img = cv2.imread("test.jpg")
+    img_path = "test1.jpg"
+    img = cv2.imread(img_path)
+
     if img is None:
-        print("Image not found. Check your path.")
+        print("[ERROR] Image not found.")
         return
 
-    # Run face detection
+    print(f"[INFO] Running detection on {img_path} …")
+
     faces = app.get(img)
-    print(f"Detected {len(faces)} face(s).")
+    num_faces = len(faces)
 
-    # Draw bounding boxes
-    for f in faces:
-        box = f.bbox.astype(int)
-        x1, y1, x2, y2 = box
+    print(f"[INFO] Faces detected: {num_faces}")
 
-        cv2.rectangle(
-            img,
-            (x1, y1),
-            (x2, y2),
-            (0, 255, 0),  # green box
-            2
-        )
+    # Timestamp for logs & output file
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-        # Optional: write confidence score on the box
-        cv2.putText(img, "face", (x1, y1 - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-                    (0, 255, 0), 2)
+    # Process each face
+    for idx, f in enumerate(faces):
+        x1, y1, x2, y2 = f.bbox.astype(int)
 
-    # Save the output image
-    output_path = "output_detected.jpg"
+        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
+        # Create metadata for each detected face
+        event_data = {
+            "timestamp": timestamp,
+            "source_image": img_path,
+            "face_index": idx,
+            "bbox": [int(x1), int(y1), int(x2), int(y2)],
+            "det_score": float(f.det_score),
+            "event_type": "face_detected"
+        }
+
+        log_event(event_data)
+
+    # Save output image
+    output_path = f"output_detected_{timestamp}.jpg"
     cv2.imwrite(output_path, img)
+    print(f"[INFO] Processed image saved → {output_path}")
 
-    print(f"Output saved as {output_path}")
-
-    # Display the result
-    cv2.imshow("Detected Faces (CPU)", img)
+    # Show result
+    cv2.imshow("Face Detection", img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
