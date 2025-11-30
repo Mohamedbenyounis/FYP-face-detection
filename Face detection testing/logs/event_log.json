@@ -1,15 +1,62 @@
 [
     {
-        "timestamp": "2025-11-23_14-35-22",
-        "source_image": "test1.jpg",
+        "timestamp": "2025-11-30_20-02-38",
+        "source_image": "C:\\Users\\Mohamed\\Documents\\FYP_code\\FYP-face-detection\\img\\Mohamed.jpg",
         "face_index": 0,
         "bbox": [
-            66,
-            27,
-            166,
-            167
+            69,
+            120,
+            328,
+            482
         ],
-        "det_score": 0.8497017621994019,
-        "event_type": "face_detected"
+        "det_score": 0.6975932717323303,
+        "recognized_as": "Unauthorised",
+        "confidence_score": 0.0514402836561203,
+        "event_type": "face_unauthorised"
+    },
+    {
+        "timestamp": "2025-11-30_20-05-37",
+        "source_image": "C:\\Users\\Mohamed\\Documents\\FYP_code\\FYP-face-detection\\img\\Mohamed.jpg",
+        "face_index": 0,
+        "bbox": [
+            69,
+            120,
+            328,
+            482
+        ],
+        "det_score": 0.6975932717323303,
+        "recognized_as": "Unauthorised",
+        "confidence_score": 0.0514402836561203,
+        "event_type": "face_unauthorised"
+    },
+    {
+        "timestamp": "2025-11-30_20-06-16",
+        "source_image": "C:\\Users\\Mohamed\\Documents\\FYP_code\\FYP-face-detection\\img\\Mohamed.jpg",
+        "face_index": 0,
+        "bbox": [
+            69,
+            120,
+            328,
+            482
+        ],
+        "det_score": 0.6975932717323303,
+        "recognized_as": "Unauthorised",
+        "confidence_score": 0.0514402836561203,
+        "event_type": "face_unauthorised"
+    },
+    {
+        "timestamp": "2025-11-30_20-07-35",
+        "source_image": "C:\\Users\\Mohamed\\Documents\\FYP_code\\FYP-face-detection\\img\\Mohamed.jpg",
+        "face_index": 0,
+        "bbox": [
+            69,
+            120,
+            328,
+            482
+        ],
+        "det_score": 0.6975932717323303,
+        "recognized_as": "Unauthorised",
+        "confidence_score": 0.0514402836561203,
+        "event_type": "face_unauthorised"
     }
 ]
